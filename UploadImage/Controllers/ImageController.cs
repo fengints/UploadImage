@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -139,7 +140,7 @@ namespace UploadImage.Controllers
                 
                 ImageDbModel model = new ImageDbModel()
                 {
-                    FileName = fileName,
+                    FileName = imageInfo.fileName,
                     AddedDate = DateTime.Now,
                     ImageData = imageBytes,
                     PreviewData = resizer.Resize(imageBytes),
