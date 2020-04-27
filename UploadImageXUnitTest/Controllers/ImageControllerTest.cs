@@ -142,12 +142,11 @@ namespace UploadImageXUnitTest.Controllers
             string invalidUrl = "https://google.com";
 
             //Act
-            var result = _controller.PostFromUrl(invalidUrl, "new file");
+            var result = _controller.PostFromUrl(invalidUrl, "file.jpg");
 
             //Assert
+            //Invalid Url
             Assert.IsNotType<OkResult>(result.Result);
-            //Assert.ThrowsAny<AggregateException>(()=> _controller.PostFromUrl(null).Result);
-            //Assert.ThrowsAny<AggregateException>(() => _controller.PostFromUrl("").Result);
             Assert.ThrowsAny<AggregateException>(() => _controller.PostFromUrl("Not url", "new file").Result);
         }
     }

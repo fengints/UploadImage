@@ -37,11 +37,6 @@ namespace UploadImage
 
             services.AddDbContext<ImageContext>((options) =>
                                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddMvc(options =>
-            //{
-            //    options.InputFormatters.Insert(0, new RawRequestBodyFormatter());
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,10 +52,6 @@ namespace UploadImage
             app.UseRouting();
 
             app.UseAuthorization();
-
-            //delete this with index.html
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

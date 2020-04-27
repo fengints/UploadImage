@@ -16,7 +16,6 @@ namespace UploadImage.Interfaces
     {
         public Task Save(ImageDbModel info, ImageContext imageContext);
     }
-
     public interface IFileChecker
     {
         void CheckForValid(FileInformation fileInfo);

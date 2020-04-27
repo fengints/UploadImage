@@ -60,7 +60,11 @@ namespace UploadImage.Controllers
                     await _service.Save(dbModel, _dbContext);
                 }
             }
-            catch(Exception ex)
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500);
@@ -103,7 +107,11 @@ namespace UploadImage.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500);
@@ -125,7 +133,7 @@ namespace UploadImage.Controllers
                 using var client = new WebClient();
                 var imageBytes = await client.DownloadDataTaskAsync(uri);
 
-                Models.FileInformation imageInfo = new Models.FileInformation() { fileName = "", data = imageBytes };
+                Models.FileInformation imageInfo = new Models.FileInformation() { fileName = fileName?? Path.GetFileName(url) , data = imageBytes };
 
                 await _service.FileCheck(imageInfo); 
                 
@@ -139,6 +147,10 @@ namespace UploadImage.Controllers
                 await _service.Save(model, _dbContext);
 
                 return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch(Exception ex)
             {
