@@ -10,7 +10,7 @@ using UploadImage.Utils;
 
 namespace UploadImage.Models
 {
-    public class JsonBase64ImageInfo: ImageInfo
+    public class JsonBase64ImageInfo: FileInformation
     {
         [Required]
         [JsonConverter(typeof(JsonBase64Formatter))]

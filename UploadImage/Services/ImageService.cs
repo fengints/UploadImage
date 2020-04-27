@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UploadImage.CInterface;
+using UploadImage.Interfaces;
 using UploadImage.Models;
 using UploadImage.Utils;
 
@@ -25,21 +26,23 @@ namespace UploadImage.Services
         }
 
 
-        public Task SecurityCheck(ImageInfo info)
+        public Task FileCheck(FileInformation info)
         {
+            //Check for valid
+            //_checker.CheckForValid();
+
             ////Check for virus before upload
             //_checker.CheckForViruses();
 
             ////Check for extension
             //_checker.CheckForExtension();
 
-
             return Task.FromResult<object>(null);
         }
 
     }
 
-    //Probably will be deleted
+
     public class ImageSaver : IImageSaver
     {
         public async Task Save(ImageDbModel imageModel, ImageContext context)
@@ -49,19 +52,20 @@ namespace UploadImage.Services
         }
     }
 
-    public interface IFileChecker
-    {
-        void CheckForViruses();
-        void CheckForExtension();
-    }
     public class ImageChecker : IFileChecker
     {
-        public void CheckForExtension()
+        public void CheckForExtension(FileInformation fileInfo)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckForViruses()
+        public void CheckForValid(FileInformation fileInfo)
+        {
+            if (fileInfo.data == Array.Empty<byte>())
+                throw new NullReferenceException("Array is empty");
+        }
+
+        public void CheckForViruses(FileInformation fileInfo)
         {
             throw new NotImplementedException();
         }

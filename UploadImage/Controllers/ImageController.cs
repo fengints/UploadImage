@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using UploadImage.CInterface;
+using UploadImage.Interfaces;
 using UploadImage.Models;
 using UploadImage.Utils;
 
@@ -48,7 +48,7 @@ namespace UploadImage.Controllers
                 //Save File
                 foreach (var imageInfo in imageInfos)
                 {
-                    await _service.SecurityCheck(imageInfo);
+                    await _service.FileCheck(imageInfo);
 
                     var dbModel = new ImageDbModel()
                     {
@@ -90,7 +90,7 @@ namespace UploadImage.Controllers
                         var content = stream.ToArray();
 
                         //Check and save
-                        await _service.SecurityCheck(new ImageInfo() {fileName = formFile.FileName, data = content });
+                        await _service.FileCheck(new Models.FileInformation() { fileName = formFile.FileName, data = content });
 
                         ImageDbModel model = new ImageDbModel()
                         {
@@ -125,9 +125,9 @@ namespace UploadImage.Controllers
                 using var client = new WebClient();
                 var imageBytes = await client.DownloadDataTaskAsync(uri);
 
-                ImageInfo imageInfo = new ImageInfo() {fileName = "", data = imageBytes };
+                Models.FileInformation imageInfo = new Models.FileInformation() { fileName = "", data = imageBytes };
 
-                await _service.SecurityCheck(imageInfo); 
+                await _service.FileCheck(imageInfo); 
                 
                 ImageDbModel model = new ImageDbModel()
                 {

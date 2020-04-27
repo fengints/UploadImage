@@ -34,7 +34,7 @@ namespace UploadImage.Utils
         {
             return InternalResize(image);
         }
-        public byte[] Resize(ImageInfo image)
+        public byte[] Resize(Models.FileInformation image)
         {
             byte[] imageBytes = image.data;
             using Image receivedImage = BytesToImage(imageBytes);
@@ -87,6 +87,6 @@ namespace UploadImage.Utils
     {
         byte[] Resize(byte[] imageBytes);
         Image Resize(Image image);
-        byte[] Resize(ImageInfo image);
+        byte[] Resize(Models.FileInformation image);
     }
 }
