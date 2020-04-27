@@ -36,11 +36,11 @@ namespace IntegrationTest
             var postContent = new MultipartContent();
 
             //Define uploading files
-            using var stream = new FileStream("Data\\Desert.jpg", FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var stream = new FileStream("Data/Desert.jpg", FileMode.Open, FileAccess.Read, FileShare.Read);
             byte[] file1 = new byte[stream.Length];
             await stream.ReadAsync(file1, 0, Convert.ToInt32(stream.Length));
 
-            using var stream2 = new FileStream("Data\\Chrysanthemum.jpg", FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var stream2 = new FileStream("Data/Chrysanthemum.jpg", FileMode.Open, FileAccess.Read, FileShare.Read);
             byte[] file2 = new byte[stream2.Length];
             await stream2.ReadAsync(file2, 0, Convert.ToInt32(stream.Length));
 
