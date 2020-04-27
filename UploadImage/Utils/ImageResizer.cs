@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UploadImage.Models;
+using PhotoSauce.MagicScaler;
 
 namespace UploadImage.Utils
 {
@@ -25,27 +26,52 @@ namespace UploadImage.Utils
 
         public byte[] Resize(byte[] imageBytes)
         {
-            using Image receivedImage =BytesToImage(imageBytes);
-            using Image resizedImage = InternalResize(receivedImage);
+            using MemoryStream incomeImage = new MemoryStream(imageBytes);
 
-            return ImageToBytes(resizedImage); 
-        }
-        public Image Resize(Image image)
-        {
-            return InternalResize(image);
+            using Stream resizedImage = MagicScaleResize(incomeImage);
+
+            StreamUtil util = new StreamUtil();
+
+            return util.FileStreamToBytes(resizedImage);
         }
         public byte[] Resize(Models.FileInformation image)
         {
             byte[] imageBytes = image.data;
-            using Image receivedImage = BytesToImage(imageBytes);
-            using Image resizedImage = InternalResize(receivedImage);
+            using MemoryStream incomeImage = new MemoryStream(imageBytes);
 
-            return ImageToBytes(resizedImage);
+            using Stream resizedImage = MagicScaleResize(incomeImage);
+
+            StreamUtil util = new StreamUtil();
+
+            return util.FileStreamToBytes(resizedImage);
         }
 
 
+        private Stream MagicScaleResize(Stream stream)
+        {
+            var outStream = new MemoryStream(1024);
 
-        private Image InternalResize(Image image)
+            const int quality = 75;
+
+            var settings = new ProcessImageSettings()
+            {
+                Width = this._width,
+
+                Height = this._height,
+
+                ResizeMode = CropScaleMode.Crop,
+
+                SaveFormat = FileFormat.Jpeg,
+
+                JpegQuality = quality,
+
+                JpegSubsampleMode = ChromaSubsampleMode.Subsample420
+            };
+            MagicImageProcessor.ProcessImage(stream, outStream, settings);
+
+            return outStream;
+        }
+        private Image BitMapResize(Image image)
         {
             var destRect = new Rectangle(0, 0, this._width, this._height);
             var destImage = new Bitmap(this._width, this._height);
@@ -86,7 +112,6 @@ namespace UploadImage.Utils
     public interface IImageResizer
     {
         byte[] Resize(byte[] imageBytes);
-        Image Resize(Image image);
         byte[] Resize(Models.FileInformation image);
     }
 }
