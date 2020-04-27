@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadImage", "UploadImage\UploadImage.csproj", "{CECA0914-4689-4E57-9F1D-7D3CBE4397DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadImageXUnitTest", "UploadImageXUnitTest\UploadImageXUnitTest.csproj", "{A4C37842-1311-4B94-A4E4-460B135B64F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadImageXUnitTest", "UploadImageXUnitTest\UploadImageXUnitTest.csproj", "{A4C37842-1311-4B94-A4E4-460B135B64F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "IntegrationTest\IntegrationTest.csproj", "{C766A770-C22F-4D5C-B753-4121887A6468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A4C37842-1311-4B94-A4E4-460B135B64F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4C37842-1311-4B94-A4E4-460B135B64F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4C37842-1311-4B94-A4E4-460B135B64F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C766A770-C22F-4D5C-B753-4121887A6468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C766A770-C22F-4D5C-B753-4121887A6468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C766A770-C22F-4D5C-B753-4121887A6468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C766A770-C22F-4D5C-B753-4121887A6468}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,7 +20,8 @@ namespace UploadImage.Utils
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            string strValue = Convert.ToBase64String(value as byte[]);
+            writer.WriteValue(strValue);
         }
     }
 }
