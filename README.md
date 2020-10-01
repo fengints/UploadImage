@@ -1,7 +1,7 @@
 # UploadImageApi
 REST Api that can save pictures to database
 
-[![CircleCI](https://app.circleci.com/pipelines/github/fengints/UploadImageApi.svg?style=svg)](https://app.circleci.com/pipelines/github/fengints/UploadImageApi)
+[![CircleCI](https://circleci.com/pipelines/github/fengints/UploadImageApi.svg?style=svg)](https://circleci.com/pipelines/github/fengints/UploadImageApi)
 
 # How to Use
 There are 3 ways of calling api
