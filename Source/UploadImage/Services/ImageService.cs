@@ -32,7 +32,7 @@ namespace UploadImage.Services
             //Check for valid
             _checker.CheckForValid(info);
 
-            ////Check for virus before upload
+            ////Check for virus before download
             //_checker.CheckForViruses();
 
             ////Check for extension
@@ -54,8 +54,8 @@ namespace UploadImage.Services
     }
 
     public class ImageChecker : IFileChecker
-    {
-        readonly static string[] permittedExtensions = { ".png", ".jpg", ".jpeg", ".tiff", ".tif", ".bmp", ".ico", ".gif", ".svg", ".webp" };
+    {   
+        private static readonly string[] permittedExtensions = { ".png", ".jpg", ".jpeg", ".tiff", ".tif", ".bmp", ".ico", ".gif", ".svg", ".webp" };
         private static readonly Dictionary<string, List<byte[]>> _fileSignature =
                                 new Dictionary<string, List<byte[]>>
                                 {
@@ -128,6 +128,7 @@ namespace UploadImage.Services
                                         }
                                     },
                                 };
+
         public void CheckForExtension(FileInformation fileInfo)
         {
             var ext = Path.GetExtension(fileInfo.fileName).ToLowerInvariant();

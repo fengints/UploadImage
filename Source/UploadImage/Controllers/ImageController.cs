@@ -25,14 +25,14 @@ namespace UploadImage.Controllers
     {
         private readonly IImageResizer resizer;
         private readonly ILogger<ImageController> _logger;
-        private readonly IImageService _service;
+        private readonly IImageService _imageService;
         private readonly ImageContext _dbContext;
 
         public ImageController(ILogger<ImageController> logger, IImageService service, ImageContext dbContext)
         {
             resizer =  new ImageResizer(100, 100, ImageFormat.Jpeg);
             _logger = logger;
-            _service = service;
+            _imageService = service;
             _dbContext = dbContext;
         }
 
@@ -42,14 +42,14 @@ namespace UploadImage.Controllers
         //// POST: api/Image
         [HttpPost]
         [Consumes("application/json")]
-        public async Task<IActionResult> PostJson([Required][FromBody] JsonBase64ImageInfo[] imageInfos)
+        public async Task<IActionResult> PostJson([FromBody] Base64ImageModel[] imageInfos)
         {
             try
             {
                 //Save File
                 foreach (var imageInfo in imageInfos)
                 {
-                    await _service.FileCheck(imageInfo);
+                    await _imageService.FileCheck(imageInfo);
 
                     var dbModel = new ImageDbModel()
                     {
@@ -58,7 +58,7 @@ namespace UploadImage.Controllers
                         ImageData = imageInfo.data,
                         PreviewData = resizer.Resize(imageInfo.data),
                     };
-                    await _service.Save(dbModel, _dbContext);
+                    await _imageService.Save(dbModel, _dbContext);
                 }
             }
             catch (ArgumentException ex)
@@ -77,7 +77,7 @@ namespace UploadImage.Controllers
         
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostForm([Required] IFormCollection dataCollection)
+        public async Task<IActionResult> PostForm(IFormCollection dataCollection)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace UploadImage.Controllers
                         var content = stream.ToArray();
 
                         //Check and save
-                        await _service.FileCheck(new Models.FileInformation() { fileName = formFile.FileName, data = content });
+                        await _imageService.FileCheck(new Models.FileInformation() { fileName = formFile.FileName, data = content });
 
                         ImageDbModel model = new ImageDbModel()
                         {
@@ -104,7 +104,7 @@ namespace UploadImage.Controllers
                             ImageData = content,
                             PreviewData = resizer.Resize(content),
                         };
-                        await _service.Save(model, _dbContext);
+                        await _imageService.Save(model, _dbContext);
                     }
                 }
             }
@@ -136,7 +136,7 @@ namespace UploadImage.Controllers
 
                 Models.FileInformation imageInfo = new Models.FileInformation() { fileName = fileName?? Path.GetFileName(url) , data = imageBytes };
 
-                await _service.FileCheck(imageInfo); 
+                await _imageService.FileCheck(imageInfo); 
                 
                 ImageDbModel model = new ImageDbModel()
                 {
@@ -145,7 +145,7 @@ namespace UploadImage.Controllers
                     ImageData = imageBytes,
                     PreviewData = resizer.Resize(imageBytes),
                 };
-                await _service.Save(model, _dbContext);
+                await _imageService.Save(model, _dbContext);
 
                 return Ok();
             }

@@ -44,7 +44,7 @@ namespace UploadImageXUnitTest.Controllers
         public void ValidTestPostJson()
         {
             //Arrange
-            JsonBase64ImageInfo[] imageInfoArray = new JsonBase64ImageInfo[2];
+            Base64ImageModel[] imageInfoArray = new Base64ImageModel[2];
 
             using var stream = new FileStream("Data\\Desert.jpg", FileMode.Open, FileAccess.Read, FileShare.Read);
             byte[] array = new byte[stream.Length];
@@ -54,8 +54,8 @@ namespace UploadImageXUnitTest.Controllers
             byte[] array2 = new byte[stream.Length];
             stream.Read(array, 0, Convert.ToInt32(stream.Length));
 
-            imageInfoArray[0] = new JsonBase64ImageInfo() { data = array, fileName = "Desert.jpg" };
-            imageInfoArray[1] = new JsonBase64ImageInfo() { data = array, fileName = "Chrysanthemum.jpg" };
+            imageInfoArray[0] = new Base64ImageModel() { data = array, fileName = "Desert.jpg" };
+            imageInfoArray[1] = new Base64ImageModel() { data = array, fileName = "Chrysanthemum.jpg" };
 
             //Act
             var result = _controller.PostJson(imageInfoArray);
@@ -103,10 +103,10 @@ namespace UploadImageXUnitTest.Controllers
         public void InvalidTestPostJson()
         {
             //Arrange
-            JsonBase64ImageInfo[] imageInfoArray = new JsonBase64ImageInfo[1];
-            JsonBase64ImageInfo[] imageInfoArray2 = new JsonBase64ImageInfo[1];
+            Base64ImageModel[] imageInfoArray = new Base64ImageModel[1];
+            Base64ImageModel[] imageInfoArray2 = new Base64ImageModel[1];
 
-            imageInfoArray2[0] = new JsonBase64ImageInfo() {fileName = "Desert" };
+            imageInfoArray2[0] = new Base64ImageModel() {fileName = "Desert" };
 
             //Act
             var result = _controller.PostJson(imageInfoArray);

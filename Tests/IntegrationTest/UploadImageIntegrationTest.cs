@@ -51,9 +51,9 @@ namespace IntegrationTest
             form.Add(new ByteArrayContent(file1), "file2", "Chrysanthemum.jpg");
             #endregion
             #region json
-            JsonBase64ImageInfo[] imageInfoArray = new JsonBase64ImageInfo[2];
-            imageInfoArray[0] = new JsonBase64ImageInfo() { data = file1, fileName = "Desert.jpg" };
-            imageInfoArray[1] = new JsonBase64ImageInfo() { data = file2, fileName = "Chrysanthemum.jpg" };
+            Base64ImageModel[] imageInfoArray = new Base64ImageModel[2];
+            imageInfoArray[0] = new Base64ImageModel() { data = file1, fileName = "Desert.jpg" };
+            imageInfoArray[1] = new Base64ImageModel() { data = file2, fileName = "Chrysanthemum.jpg" };
 
             string jsonValue = JsonConvert.SerializeObject(imageInfoArray);
 

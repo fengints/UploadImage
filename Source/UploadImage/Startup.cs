@@ -20,12 +20,14 @@ namespace UploadImage
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
+        public IWebHostEnvironment WebHostEnvironment { get; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -35,14 +37,21 @@ namespace UploadImage
             services.AddTransient<IImageService>((service) => 
                                     new ImageService(new ImageSaver(), new ImageChecker()));
 
-            services.AddDbContext<ImageContext>((options) =>
+            if (WebHostEnvironment.IsDevelopment())
+            {
+                services.AddDbContext<ImageContext>((options) =>
+                                options.UseInMemoryDatabase("ImagesDB"));
+            }
+            else{
+                services.AddDbContext<ImageContext>((options) =>
                                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (WebHostEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -50,8 +59,6 @@ namespace UploadImage
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

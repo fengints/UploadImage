@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UploadImage\UploadImage.csproj" />
+    <ProjectReference Include="..\..\Source\UploadImage\UploadImage.csproj" />
   </ItemGroup>
 
   <ItemGroup>
