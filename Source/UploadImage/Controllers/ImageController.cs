@@ -30,14 +30,13 @@ namespace UploadImage.Controllers
 
         public ImageController(ILogger<ImageController> logger, IImageService service, ImageContext dbContext)
         {
+            //Different values may be needed for every controller
             resizer =  new ImageResizer(100, 100, ImageFormat.Jpeg);
+
             _logger = logger;
             _imageService = service;
             _dbContext = dbContext;
         }
-
-
-
 
         //// POST: api/Image
         [HttpPost]
