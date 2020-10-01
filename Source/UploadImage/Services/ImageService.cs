@@ -43,7 +43,6 @@ namespace UploadImage.Services
 
     }
 
-
     public class ImageSaver : IImageSaver
     {
         public async Task Save(ImageDbModel imageModel, ImageContext context)

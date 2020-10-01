@@ -31,7 +31,7 @@ namespace UploadImage.Controllers
         public ImageController(ILogger<ImageController> logger, IImageService service, ImageContext dbContext)
         {
             //Different values may be needed for every controller
-            resizer =  new ImageResizer(100, 100, ImageFormat.Jpeg);
+            resizer =  new MagicScaleResizer(100, 100, PhotoSauce.MagicScaler.FileFormat.Jpeg);
 
             _logger = logger;
             _imageService = service;
