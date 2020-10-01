@@ -22,8 +22,7 @@ namespace UploadImage
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>()
-                              .UseSetting("https_port", "5001");
+                    webBuilder.UseStartup<Startup>();
                 });
     
     }
